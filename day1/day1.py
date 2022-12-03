@@ -23,6 +23,35 @@ def part_one(input_path):
     print(f"Max elf ID: {max_elf_id}\nMax elf cals: {max_elf_cal}")
 
 
+def part_two(input_path):
+    max_elf_id = None
+    max_elf_cal = 0
+    cur_cal = 0
+    elf_id = 1
+    elfs = []
+    with open(input_path, 'r') as fh:
+        for line in fh:
+            if line.strip() == '':
+                if cur_cal > max_elf_cal:
+                    max_elf_cal = cur_cal
+                    max_elf_id = elf_id
+                elfs.append(cur_cal)
+                cur_cal = 0
+                elf_id += 1
+            else:
+                cals = int(line.strip())
+                cur_cal += cals
+        
+        if cur_cal > max_elf_cal:
+            max_elf_cal = cur_cal
+            max_elf_id = elf_id
+            elfs.append(cur_cal)
+            cur_cal = 0
+
+    elfs.sort()
+    print(f"Top3 elf cals = {sum(elfs[-3:])}")
+
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -112,24 +141,11 @@ class TopKList:
         current.next = None
         self.nodes -= 1
 
-                
-        
-
-        
-
-
-
-
-
-def part_two():
-    pass
-
-
-
 
 if __name__ == '__main__':
     #input_path = 'test_input1.txt'
     #input_path = 'test_input2.txt'
     input_path = 'input.txt'
     part_one(input_path)
+    part_two(input_path)
     
